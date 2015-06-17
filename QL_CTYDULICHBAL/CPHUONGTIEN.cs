@@ -87,7 +87,7 @@ namespace QL_CTYDULICHBAL
             phuongtien.MAXE = pt.MAXE;
             phuongtien.GHICHU = pt.GHICHU;
             phuongtien.RANH = pt.RANH;
-            phuongtien.DONGIAPT = tinhDONGIAPT(pt);
+            phuongtien.DONGIAPT = pt.DONGIAPT;
             db.PHUONGTIENs.InsertOnSubmit(phuongtien);
             db.SubmitChanges();
             return true;
@@ -107,7 +107,6 @@ namespace QL_CTYDULICHBAL
             var phuongtien = db.PHUONGTIENs.SingleOrDefault(x => x.MAPT == pt.MAPT);
             phuongtien.MATX = pt.MATX;
             phuongtien.MAXE = pt.MAXE;
-            phuongtien.DONGIAPT = tinhDONGIAPT(pt);
             phuongtien.GHICHU = pt.GHICHU;
             phuongtien.RANH = pt.RANH;
 
@@ -115,9 +114,9 @@ namespace QL_CTYDULICHBAL
             return true;
         }    
 
-        public int tinhDONGIAPT(PHUONGTIENView pt)
+        public int tinhDONGIAPT(int Dongiatx , int Dongiaxe)
         {
-            return pt.DONGIATX + pt.DONGIAXE;
+            return Dongiatx + Dongiaxe;
         }
     }
 }

@@ -196,6 +196,11 @@
             // 
             this.txtDonGia.Location = new System.Drawing.Point(125, 86);
             this.txtDonGia.Name = "txtDonGia";
+            this.txtDonGia.Properties.Appearance.BackColor = System.Drawing.Color.White;
+            this.txtDonGia.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
+            this.txtDonGia.Properties.Appearance.Options.UseBackColor = true;
+            this.txtDonGia.Properties.Appearance.Options.UseFont = true;
+            this.txtDonGia.Properties.ReadOnly = true;
             this.txtDonGia.Size = new System.Drawing.Size(165, 20);
             this.txtDonGia.TabIndex = 51;
             // 

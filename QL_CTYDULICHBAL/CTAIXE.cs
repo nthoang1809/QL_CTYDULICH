@@ -13,6 +13,11 @@ namespace QL_CTYDULICHBAL
             return db.TAIXEs.ToList();
         }
 
+        public TAIXE layDTAIXEView(int matx)
+        {
+            return db.TAIXEs.SingleOrDefault(tx => tx.MATX == matx);
+        }
+
         public bool themTAIXE(TAIXE them)
         {
             db.TAIXEs.InsertOnSubmit(them);

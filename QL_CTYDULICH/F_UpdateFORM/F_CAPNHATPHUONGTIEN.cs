@@ -17,6 +17,8 @@ namespace QL_CTYDULICH.F_UpdateFORM
         DevExpress.XtraEditors.XtraForm parent;
         PHUONGTIENView oriData;
         bool isNew;
+        int Dongiaxe;
+        int Dongiatx;
         public F_CAPNHATPHUONGTIEN()
         {
             InitializeComponent();
@@ -39,16 +41,15 @@ namespace QL_CTYDULICH.F_UpdateFORM
 
         private void btnLuu_Click(object sender, EventArgs e)
         {
+            oriData.DONGIAPT = (int)txtDonGia.EditValue;
             var kh = new CPHUONGTIEN();
-           
+
             if (!isNew)
             {
                 kh.capnhatPHUONGTIEN(oriData);
             }
             else
             {
-                var pt = new CPHUONGTIEN();
-                txtDonGia.EditValue = pt.tinhDONGIAPT(oriData);
                 kh.themPHUONGTIEN(oriData);
             }
 
@@ -71,7 +72,7 @@ namespace QL_CTYDULICH.F_UpdateFORM
             txtMaPT.DataBindings.Add("EditValue", oriData, "MAPT");
             txtGhiChu.DataBindings.Add("EditValue", oriData, "GHICHU");
             rdoRanh.DataBindings.Add("EditValue", oriData, "RANH", true, DataSourceUpdateMode.OnPropertyChanged);
-            txtDonGia.DataBindings.Add("EditValue", oriData, "DONGIAPT",true,DataSourceUpdateMode.OnPropertyChanged);
+            //txtDonGia.DataBindings.Add("EditValue", oriData, "DONGIAPT", true, DataSourceUpdateMode.OnPropertyChanged);
             cboTenTaiXe.DataBindings.Add("EditValue", oriData, "MATX", true, DataSourceUpdateMode.OnPropertyChanged);
             cboTenXe.DataBindings.Add("EditValue", oriData, "MAXE", true, DataSourceUpdateMode.OnPropertyChanged);
         }
@@ -87,12 +88,11 @@ namespace QL_CTYDULICH.F_UpdateFORM
             cboTenXe.Properties.DataSource = xe.layDSXE();
             cboTenXe.Properties.ValueMember = "MAXE";
             cboTenXe.Properties.DisplayMember = "TENXE";
-
         }
 
         private void F_CAPNHATPHUONGTIEN_FormClosed(object sender, FormClosedEventArgs e)
         {
-           parent.Enabled = true;
+            parent.Enabled = true;
             if (parent is F_DSPHUONGTIEN)
             {
                 ((F_DSPHUONGTIEN)parent).loadDataSource();
@@ -107,12 +107,28 @@ namespace QL_CTYDULICH.F_UpdateFORM
             var maxe = (int)cboTenXe.EditValue;
             CXE xe = new CXE();
             var data = xe.layXEView(maxe);
-            cboTenXe.EditValue = data.DONGIAXE;
+            Dongiaxe = data.DONGIAXE;
+
+            capnhatDONGIA();
         }
 
         private void cboTenTaiXe_EditValueChanged(object sender, EventArgs e)
         {
-            
+            if (!(cboTenTaiXe.EditValue is int))
+                return;
+
+            var matx = (int)cboTenTaiXe.EditValue;
+            CTAIXE tx = new CTAIXE();
+            var data = tx.layDTAIXEView(matx);
+            Dongiatx = data.DONGIATX;
+
+            capnhatDONGIA();
+        }
+
+        private void capnhatDONGIA()
+        {
+            var pt = new CPHUONGTIEN();
+            txtDonGia.EditValue = pt.tinhDONGIAPT(Dongiatx, Dongiaxe);
         }
     }
 }
